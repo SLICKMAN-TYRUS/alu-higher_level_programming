@@ -1,7 +1,3 @@
 #!/usr/bin/python3
-def max_integer(my_list=[]):
-    if len(my_list) < 1:
-        return None
-    list_copy = my_list.copy()
-    list_copy.sort()
-    return list_copy[-1]
+def divisible_by_2(my_list=[]):
+    return list(map(lambda x: True if x % 2 == 0 else False, my_list))
