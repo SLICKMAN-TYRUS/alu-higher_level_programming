@@ -11,28 +11,64 @@ class TestBase(unittest.TestCase):
     Test cases for the Base class.
     """
 
-    def test_id_assignment(self):
+    def test_id_auto_assign(self):
         """
-        Test that the id is correctly assigned.
+        Test that ID is assigned automatically.
         """
-        b1 = Base()
-        b2 = Base(100)
-        b3 = Base()
-
-        self.assertEqual(b1.id, 1)
-        self.assertEqual(b2.id, 100)
-        self.assertEqual(b3.id, 2)
-
-    def test_auto_increment(self):
-        """
-        Test that ids are auto-incremented correctly.
-        """
-        Base._Base__nb_objects = 0  # Reset counter for testing
+        Base._Base__nb_objects = 0  # Reset for testing
         b1 = Base()
         b2 = Base()
-
         self.assertEqual(b1.id, 1)
         self.assertEqual(b2.id, 2)
+
+    def test_id_passed(self):
+        """
+        Test that the passed ID is correctly set.
+        """
+        b = Base(89)
+        self.assertEqual(b.id, 89)
+
+    def test_to_json_string_none(self):
+        """
+        Test Base.to_json_string with None.
+        """
+        self.assertEqual(Base.to_json_string(None), "[]")
+
+    def test_to_json_string_empty(self):
+        """
+        Test Base.to_json_string with an empty list.
+        """
+        self.assertEqual(Base.to_json_string([]), "[]")
+
+    def test_to_json_string_valid(self):
+        """
+        Test Base.to_json_string with a valid list.
+        """
+        data = [{"id": 12}]
+        json_str = Base.to_json_string(data)
+        self.assertEqual(json_str, '[{"id": 12}]')
+        self.assertIsInstance(json_str, str)
+
+    def test_from_json_string_none(self):
+        """
+        Test Base.from_json_string with None.
+        """
+        self.assertEqual(Base.from_json_string(None), [])
+
+    def test_from_json_string_empty(self):
+        """
+        Test Base.from_json_string with an empty JSON string.
+        """
+        self.assertEqual(Base.from_json_string("[]"), [])
+
+    def test_from_json_string_valid(self):
+        """
+        Test Base.from_json_string with a valid JSON string.
+        """
+        data = '[{"id": 89}]'
+        result = Base.from_json_string(data)
+        self.assertEqual(result, [{"id": 89}])
+        self.assertIsInstance(result, list)
 
 
 if __name__ == "__main__":
