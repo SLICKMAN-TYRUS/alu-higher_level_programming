@@ -1,0 +1,1 @@
+Welcome to my Javascript_objects_scopes_closures directory.
